@@ -1,4 +1,6 @@
-#Requires AutoHotkey v2.0
+import codecs
+
+content = r"""#Requires AutoHotkey v2.0
 #SingleInstance Force
 
 ; ==============================================================================
@@ -208,3 +210,6 @@ GetBrowserURL(hWnd) {
     }
     return ""
 }
+"""
+with codecs.open("monolith.ahk", "w", "utf-8") as f:
+    f.write(content)
