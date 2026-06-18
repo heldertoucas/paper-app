@@ -1,6 +1,6 @@
-# paper-app Project Draft
+# Paperclip Project Draft
 
-Consolidated brainstorming and product requirements for the Monolith capture system.
+Consolidated brainstorming and product requirements for the Paperclip capture system.
 
 ---
 
@@ -17,7 +17,7 @@ Consolidated brainstorming and product requirements for the Monolith capture sys
 
 ## Product Requirement Document (PRD) · Versão Expandida
 
-## Project Monolith: Ultra-lightweight Desktop Scratchpad
+## Project Paperclip: Ultra-lightweight Desktop Scratchpad
 
 ---
 
@@ -25,13 +25,13 @@ Consolidated brainstorming and product requirements for the Monolith capture sys
 
 ### 1.1. Contexto Académico e Profissional
 
-O Project Monolith nasce da necessidade de alinhar a recolha quotidiana de informação com os princípios fundamentais da literacia digital e da cidadania crítica. A tecnologia deve funcionar estritamente como um meio invisível de capacitação e nunca como um fim em si mesma. Num ecossistema assente em curadoria de conhecimento, a retenção de ideias e o registo de dados não podem ser travados por burocracias de interface ou por processos de formatação complexos.
+O Project Paperclip nasce da necessidade de alinhar a recolha quotidiana de informação com os princípios fundamentais da literacia digital e da cidadania crítica. A tecnologia deve funcionar estritamente como um meio invisível de capacitação e nunca como um fim em si mesma. Num ecossistema assente em curadoria de conhecimento, a retenção de ideias e o registo de dados não podem ser travados por burocracias de interface ou por processos de formatação complexos.
 
 ### 1.2. Objetivos Estratégicos
 
-O utilitário foi concebido especificamente para um ecossistema de gestão de conhecimento pessoal (PKM) assente em repositórios locais e operado por interfaces de linha de comando (CLI), como o cliente Claude Code. O Monolith resolve o dilema da fricção de captura através da separação total de responsabilidades:
+O utilitário foi concebido especificamente para um ecossistema de gestão de conhecimento pessoal (PKM) assente em repositórios locais e operado por interfaces de linha de comando (CLI), como o cliente Claude Code. O Paperclip resolve o dilema da fricção de captura através da separação total de responsabilidades:
 
-* **O Frontend (Monolith):** Atua como um terminal de captura puro, minimalista e instantâneo, otimizado para o fluxo de consciência do utilizador.
+* **O Frontend (Paperclip):** Atua como um terminal de captura puro, minimalista e instantâneo, otimizado para o fluxo de consciência do utilizador.
 * **O Middleware (PocketBase):** Funciona como um colchão de amortecimento assíncrono na nuvem, isolando o repositório principal e eliminando a necessidade de gerir desfasamentos no histórico do Git (*non-fast-forward*) ou resolver conflitos de branches entre múltiplas máquinas físicas (PC Windows e Mac).
 * **O Backend (Agente de IA):** Absorve os ficheiros em bruto injetados na pasta `00-inbox/`, assumindo a responsabilidade exclusiva de categorizar, aplicar taxonomia, criar ligações bidirecionais e validar o frontmatter através do fluxo de automatização matinal (`ai-start`).
 
@@ -45,7 +45,7 @@ A arquitetura do sistema adota uma postura híbrida (*Local-First com Persistên
 
 ```
 +────────────────────────────────────────────────────────┐
-│             Desktop Monolith App (Python)              │
+│             Desktop Paperclip App (Python)              │
 +───────────────────────────┬────────────────────────────┘
                             │ (Escrita Síncrona < 5ms)
                             ▼
@@ -74,7 +74,7 @@ A arquitetura do sistema adota uma postura híbrida (*Local-First com Persistên
 
 * **Isolamento do Repositório Git:** A aplicação local e os clientes móveis nunca comunicam com a API do GitHub. O repositório central `obsidian-ht` permanece fechado e imune a commits automáticos fragmentados.
 * **Mecânica de Concorrência:** O PocketBase gera identificadores de registo únicos (IDs baseados em strings aleatórias de alta entropia), o que impede a sobreposição de notas criadas no mesmo segundo a partir de dispositivos distintos.
-* **Segurança de Trânsito e Repouso:** Os dados que viajam do Monolith para o PocketBase são empacotados com cifragem simétrica AES-GCM. Mesmo em caso de quebra de segurança na infraestrutura da cloud, as notas candidas permanecem ilegíveis para terceiros.
+* **Segurança de Trânsito e Repouso:** Os dados que viajam do Paperclip para o PocketBase são empacotados com cifragem simétrica AES-GCM. Mesmo em caso de quebra de segurança na infraestrutura da cloud, as notas candidas permanecem ilegíveis para terceiros.
 
 ---
 
@@ -124,14 +124,14 @@ A zona superior da interface possui um alinhamento horizontal de separadores est
 
 * **Ativação Toggle por Atalho:** O comando de gravação de voz é acionado ao premir `Ctrl + R` ou `Cmd + R`. O utilizador não precisa de manter as teclas premidas durante o discurso.
 * **Mutações Visuais de Estado:** O editor de texto altera a folha de estilo da interface: as bordas ganham uma moldura pulsante em ciano e o fundo do campo de entrada passa para um carmesim escuro profundo (`#2a1414`).
-* **Deteção de Atividade de Voz (VAD Local):** A aplicação integra a biblioteca leve `webrtcvad`. Se o sistema detetar uma ausência de fala contínua superior a 2.5 segundos, o Monolith assume que a nota foi concluída. A gravação é encerrada de forma automática, emitindo um sinal sonoro discreto de sistema.
+* **Deteção de Atividade de Voz (VAD Local):** A aplicação integra a biblioteca leve `webrtcvad`. Se o sistema detetar uma ausência de fala contínua superior a 2.5 segundos, o Paperclip assume que a nota foi concluída. A gravação é encerrada de forma automática, emitindo um sinal sonoro discreto de sistema.
 * **Processamento Assíncrono via API:** O ficheiro de áudio temporário é comprimido em formato `.wav` mono a 16kHz e despachado de imediato via pedido HTTP multipart para a API da Groq (executando o modelo Whisper-Large-v3). A resposta com o texto transcrito em Português de Portugal substitui o estado visual de gravação e injeta o bloco de texto formatado na posição atual do cursor do utilizador.
 
 ---
 
 ## 4. Visual & Interface Design Guidelines
 
-A interface do Monolith é orientada pela ausência de ruído visual. O design deve ser completamente plano, sem gradientes ou decorações tridimensionais, integrando-se nativamente em ambientes de trabalho de estética minimalista e focados em produtividade por teclado.
+A interface do Paperclip é orientada pela ausência de ruído visual. O design deve ser completamente plano, sem gradientes ou decorações tridimensionais, integrando-se nativamente em ambientes de trabalho de estética minimalista e focados em produtividade por teclado.
 
 ### 4.1. Arquitetura de Janela e Comportamento Geométrico
 
@@ -229,7 +229,7 @@ QLabel#HotkeyIndicator {
 A proteção da privacidade dos dados efémeros que transitam fora da rede local é um requisito crítico de arquitetura. O sistema implementa um fluxo de segurança em três camadas:
 
 1. **Autenticação por Token Estático:** A instância do PocketBase na cloud (Fly.io/Zeabur) rejeita qualquer pedido HTTP que não inclua um cabeçalho `Authorization: Bearer <JWT_SECRET>`. As regras de coleção da base de dados (`API Rules`) são definidas como `@request.headers.auth = "true"` tanto para operações de escrita como de eliminação.
-2. **Cifragem AES-GCM Local:** O Monolith não envia o texto plano da nota. Antes da transmissão, o payload é cifrado em memória através de uma biblioteca Python nativa (`cryptography.hazmat`) recorrendo ao algoritmo **AES-256-GCM**. A chave de cifragem simétrica é guardada exclusivamente de forma local no Mac e no Windows, configurada nas variáveis de ambiente das respetivas máquinas.
+2. **Cifragem AES-GCM Local:** O Paperclip não envia o texto plano da nota. Antes da transmissão, o payload é cifrado em memória através de uma biblioteca Python nativa (`cryptography.hazmat`) recorrendo ao algoritmo **AES-256-GCM**. A chave de cifragem simétrica é guardada exclusivamente de forma local no Mac e no Windows, configurada nas variáveis de ambiente das respetivas máquinas.
 3. **Payload Ofuscado:** O PocketBase armazena apenas um bloco hexadecimal contendo o vetor de inicialização (IV), a tag de autenticação e o texto cifrado. Qualquer interceção ou fuga de dados no servidor remoto preserva a confidencialidade absoluta das notas.
 
 ### 5.2. Pipeline do Script de Ingestão Local (`pull_pocketbase.py`)
@@ -352,7 +352,7 @@ A aplicação adota um modelo de tolerância a falhas assente no princípio da a
 
 ## Product Requirement Document (PRD)
 
-## Project Monolith Web: Cloud-Based Mobile & Browser Capture Endpoint
+## Project Paperclip Web: Cloud-Based Mobile & Browser Capture Endpoint
 
 ---
 
@@ -360,7 +360,7 @@ A aplicação adota um modelo de tolerância a falhas assente no princípio da a
 
 ### 1.1. Contexto de Mobilidade e Acessibilidade Universal
 
-O Project Monolith Web expande a capacidade de captura do ecossistema do Second Brain (`obsidian-ht`) para cenários onde a aplicação nativa de ambiente de trabalho não está disponível. Ele visa dotar o telemóvel Android e navegadores secundários de um ponto de entrada rápido, esteticamente idêntico e funcionalmente agnóstico ao dispositivo.
+O Project Paperclip Web expande a capacidade de captura do ecossistema do Second Brain (`obsidian-ht`) para cenários onde a aplicação nativa de ambiente de trabalho não está disponível. Ele visa dotar o telemóvel Android e navegadores secundários de um ponto de entrada rápido, esteticamente idêntico e funcionalmente agnóstico ao dispositivo.
 
 Seguindo os princípios de autonomia e espírito crítico no uso da tecnologia, esta aplicação web recusa converter-se num editor complexo ou num gestor de ficheiros em nuvem. A sua existência serve uma única métrica: **reduzir o tempo entre a conceção de um pensamento cândido e a sua persistência segura na base de dados temporária**.
 
@@ -451,7 +451,7 @@ Este código representa a especificação visual e estrutural exata da aplicaç�
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Monolith Web</title>
+    <title>Paperclip Web</title>
     <style>
         :root {
             --bg-main: #101010;
@@ -632,7 +632,7 @@ As notas enviadas pela versão web entram na mesma tabela `notas_inbox` do Pocke
 
 ### 6.2. Modelo de Resiliência Offline para Mobilidade
 
-Como as redes móveis são propensas a quebras de sinal, o Monolith Web implementa uma política estrita de persistência local temporária:
+Como as redes móveis são propensas a quebras de sinal, o Paperclip Web implementa uma política estrita de persistência local temporária:
 
 * **Fila de Espera no IndexedDB:** Se um pedido de envio para o PocketBase falhar por falta de rede (`Network Error`), a nota cifrada é guardada automaticamente no **IndexedDB** do browser do telemóvel.
 * **Sincronização Silenciosa em Background:** Um mecanismo de sincronização monitoriza o evento `online` do navegador. Assim que a rede for restabelecida, a aplicação esvazia a fila do IndexedDB, enviando as notas acumuladas de forma silenciosa para o PocketBase, sem que o utilizador tenha de reintroduzir os dados ou manter a aplicação aberta em primeiro plano.
@@ -765,14 +765,14 @@ Como o sistema foi desenhado sob a arquitetura **PWA (Progressive Web App)** hos
 1. Abra o **Google Chrome** no seu dispositivo Android.
 2. Aceda ao URL privado da sua aplicação (ex: `https://o-seu-monolith.vercel.app`).
 3. Introduza a sua chave simétrica de cifragem (`MONOLITH_CRYPTO_KEY`) no painel de configuração inicial. Esta chave fica guardada no `localStorage` seguro do seu browser.
-4. Clique na barra de notificações inferior do Chrome que diz **"Adicionar Monolith ao ecrã principal"** (ou aceda ao menu de três pontos do Chrome e selecione essa opção).
+4. Clique na barra de notificações inferior do Chrome que diz **"Adicionar Paperclip ao ecrã principal"** (ou aceda ao menu de três pontos do Chrome e selecione essa opção).
 5. O ícone da aplicação surgirá no ecrã do seu telemóvel. Feche o Chrome.
 
 ---
 
 ## 2. O Fluxo Diário de Captura de Texto
 
-1. Toque no ícone do **Monolith** no ecrã principal do seu Android. A aplicação abre instantaneamente em modo de ecrã inteiro, ocultando a barra de endereço do navegador.
+1. Toque no ícone do **Paperclip** no ecrã principal do seu Android. A aplicação abre instantaneamente em modo de ecrã inteiro, ocultando a barra de endereço do navegador.
 2. O cursor foca-se imediatamente no editor de texto.
 3. **Selecione o Contexto:** Deslize horizontalmente o menu de pílulas no topo e selecione o tema da nota (ex: toque em **Futuro Digital**).
 4. Escreva a sua nota cândida ou pensamento efémero.
@@ -825,7 +825,7 @@ As notas acumuladas durante o seu dia através do Android encontram-se cifradas 
 
 ## Summary
 
-The **paper-app** (Project Monolith) is a multi-platform quick capture system for the obsidian-ht Second Brain ecosystem:
+The **Paperclip** system is a multi-platform quick capture system for the obsidian-ht Second Brain ecosystem:
 
 - **Desktop App (PRD1):** Python/PySide6 native app with local SQLite, system tray integration, global hotkeys, and audio transcription
 - **Web/PWA App (PRD2):** Next.js on Vercel for mobile/browser access with offline support via IndexedDB
