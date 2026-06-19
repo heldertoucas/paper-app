@@ -21,7 +21,7 @@ paperclip.is_visible = false
 hs.fs.mkdir(paperclip.destination_dir)
 
 -- HTML/CSS for the UI (Warm Paper Theme)
-local html_template = [[
+local html_template = [=[
 <!DOCTYPE html>
 <html>
 <head>
@@ -325,16 +325,11 @@ local html_template = [[
     </script>
 </body>
 </html>
-]]
+]=]
 
--- Create WebView
-paperclip.webview = hs.webview.new({x = 0, y = 0, w = paperclip.width, h = paperclip.height}, {
-    developerExtrasEnabled = true
-})
-paperclip.webview:windowStyle({"borderless", "titled"})
-paperclip.webview:shadow(true)
-paperclip.webview:level(hs.drawing.windowLevels.mainMenu)
-paperclip.webview:setCallback(function(message)
+-- Setup User Content Controller for JS->Lua communication
+local ucc = hs.webview.usercontent.new("paperclip")
+ucc:setCallback(function(message)
     local body = message.body
     if body.action == "save" then
         paperclip.saveNote(body.content)
@@ -359,6 +354,14 @@ paperclip.webview:setCallback(function(message)
         end
     end
 end)
+
+-- Create WebView
+paperclip.webview = hs.webview.new({x = 0, y = 0, w = paperclip.width, h = paperclip.height}, {
+    developerExtrasEnabled = true
+}, ucc)
+paperclip.webview:windowStyle({"borderless", "titled"})
+paperclip.webview:shadow(true)
+paperclip.webview:level(hs.drawing.windowLevels.mainMenu)
 paperclip.webview:html(html_template)
 
 -- Logic: Capture Context
